@@ -1,0 +1,43 @@
+---
+import "../styles/global.css";
+import { event } from "../data/event.js";
+
+const {
+  title = `${event.coupleNames} Wedding`,
+  description = "Wedding details and RSVP",
+  showHeader = true,
+  useContainer = true
+} = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+  </head>
+  <body>
+    {showHeader && (
+      <header>
+        <div class="nav">
+          <div class="nav-title">{event.coupleNames} 's Wedding</div>
+          <nav class="nav-links">
+            <a href="/">Home</a>
+            <a href="/rsvp">RSVP</a>
+            <a href="/upload">Photo Upload</a>
+          </nav>
+        </div>
+      </header>
+    )}
+    <main>
+      {useContainer ? (
+        <div class="container">
+          <slot />
+        </div>
+      ) : (
+        <slot />
+      )}
+    </main>
+  </body>
+</html>

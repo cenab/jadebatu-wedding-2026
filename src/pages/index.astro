@@ -1,0 +1,239 @@
+---
+import Base from "../layouts/Base.astro";
+import { event } from "../data/event.js";
+
+const [partnerOneRaw, partnerTwoRaw] = event.coupleNames.split(/\s+(?:and|&)\s+/i);
+const partnerOne = partnerOneRaw?.trim() || event.coupleNames;
+const partnerTwo = partnerTwoRaw?.trim() || "";
+
+const inviteLine1 = "Please join us at";
+const inviteLine2 = event.venue.name;
+const inviteLine3 = event.date;
+const inviteLine4 = event.startTime;
+---
+<Base title={`${event.coupleNames} Wedding`} showHeader={false} useContainer={false}>
+  <section class="invitation-page" aria-label="Wedding invitation">
+    <div class="invitation-stage">
+      <div class="invitation-stack">
+        <div class="invitation-frame">
+          <div class="invitation-canvas" role="img" aria-label={`Wedding invitation for ${event.coupleNames}`}>
+            <div class="invitation-card">
+              <img class="ellipse ellipse-1" src="/invitation/ellipse-1.svg" alt="" aria-hidden="true" />
+              <img class="ellipse ellipse-2" src="/invitation/ellipse-2.svg" alt="" aria-hidden="true" />
+
+              <div class="flowers flowers-top" aria-hidden="true">
+                <img src="/invitation/flowers-top.png" alt="" />
+              </div>
+
+              <div class="flowers flowers-bottom crop-left-out" aria-hidden="true">
+                <img src="/invitation/flowers-bottom.png" alt="" />
+              </div>
+
+              <div class="invite-text invite-text--top">
+                <p>We joyfully invite</p>
+                <p>you to join us in our wedding</p>
+              </div>
+
+              <div class="names">
+                {partnerTwo ? (
+                  <>
+                    <p>{partnerOne}</p>
+                    <p aria-hidden="true">&</p>
+                    <p>{partnerTwo}</p>
+                  </>
+                ) : (
+                  <p>{event.coupleNames}</p>
+                )}
+              </div>
+
+              <div class="invite-text invite-text--bottom">
+                <p>{inviteLine1} {inviteLine2}</p>
+                <p>at {inviteLine3} </p>
+                <p>on {inviteLine4}.</p>
+                <!-- <p>Your presence is cherished.</p> -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <a class="invitation-rsvp" href="/rsvp">RSVP</a>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    :global(main) {
+      padding: 0;
+    }
+
+    :global(body) {
+      background: rgba(233, 69, 111, 0.24);
+    }
+
+    .invitation-stage {
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px 16px 48px;
+    }
+
+    .invitation-stack {
+      display: grid;
+      justify-items: center;
+      gap: 16px;
+    }
+
+    .invitation-rsvp {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 24px;
+      border-radius: 999px;
+      border: 1px solid rgba(233, 69, 111, 0.45);
+      background: rgba(251, 231, 225, 0.9);
+      color: #e9456f;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      box-shadow: 0 12px 24px rgba(233, 69, 111, 0.18);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .invitation-rsvp:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 32px rgba(233, 69, 111, 0.22);
+    }
+
+    .invitation-rsvp:focus-visible {
+      outline: 3px solid rgba(233, 69, 111, 0.35);
+      outline-offset: 4px;
+    }
+
+    .invitation-frame {
+      --design-w: 595;
+      --design-h: 842;
+      --scale: min(1, calc((100vw - 32px) / (var(--design-w) * 1px)), calc((100svh - 32px) / (var(--design-h) * 1px)));
+      width: calc(var(--design-w) * 1px * var(--scale));
+      height: calc(var(--design-h) * 1px * var(--scale));
+      position: relative;
+    }
+
+    .invitation-canvas {
+      width: calc(var(--design-w) * 1px);
+      height: calc(var(--design-h) * 1px);
+      position: absolute;
+      inset: 0;
+      transform: scale(var(--scale));
+      transform-origin: top left;
+    }
+
+    .invitation-card {
+      position: relative;
+      width: 595px;
+      height: 842px;
+      background: rgba(251, 231, 225, 0.85);
+      box-shadow: 20px 20px 5px rgba(233, 69, 111, 0.1);
+      overflow: hidden;
+    }
+
+    .ellipse {
+      position: absolute;
+      width: 451px;
+      height: 656.7px;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) translate(var(--ellipse-offset-x, 0), var(--ellipse-offset-y, 0));
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .ellipse-1 {
+      --ellipse-offset-x: 0px;
+      --ellipse-offset-y: 0px;
+    }
+
+    .ellipse-2 {
+      --ellipse-offset-x: -13px;
+      --ellipse-offset-y: 18px;
+    }
+
+    .flowers {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      user-select: none;
+      filter: drop-shadow(4px 20px 20px rgba(233, 69, 111, 0.12));
+    }
+
+    .flowers img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .flowers-top {
+      left: -50px;
+      top: 110px;
+      transform: rotate(57.727deg);
+      filter: drop-shadow(4px 20px 20px rgba(233, 69, 111, 0.1));
+    }
+
+    .flowers-bottom {
+      left: 350px;
+      top: 600px;
+      transform: rotate(201.163deg);
+    }
+
+
+    .invite-text {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      font-family: "Jaldi", sans-serif;
+      font-size: 24px;
+      line-height: 40px;
+      color: rgba(233, 69, 111, 0.69);
+      width: 460px;
+    }
+
+    .invite-text p {
+      margin: 0;
+    }
+
+    .invite-text--top {
+      top: 240px;
+    }
+
+    .invite-text--bottom {
+      top: 511px;
+    }
+
+    .names {
+      position: absolute;
+      left: 50%;
+      top: 350px;
+      transform: translateX(-50%);
+      text-align: center;
+      font-family: "Mrs Saint Delafield", cursive;
+      font-size: 55px;
+      line-height: 50px;
+      color: #e9456f;
+      text-shadow: 0 4px 4px rgba(233, 69, 111, 0.24);
+      white-space: nowrap;
+    }
+
+    .names p {
+      margin: 0;
+    }
+
+    @media (max-width: 420px) {
+      .invitation-stage {
+        padding: 20px 14px 36px;
+      }
+    }
+  </style>
+</Base>

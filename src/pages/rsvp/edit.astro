@@ -1,0 +1,121 @@
+---
+import Base from "../../layouts/Base.astro";
+import { event } from "../../data/event.js";
+---
+<Base title={`Update RSVP | ${event.coupleNames}`}>
+  <section class="card">
+    <h2 class="section-title section-title--plain">Update your RSVP</h2>
+    <p>Use the private link from your email to update your response.</p>
+
+    <form id="edit-form">
+      <div>
+        <label for="name">Full name</label>
+        <input id="name" name="name" type="text" autocomplete="name" required />
+      </div>
+      <div>
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" required />
+      </div>
+      <div>
+        <label>Will you attend?</label>
+        <div class="form-row" style="align-items: center;">
+          <label><input type="radio" name="attending" value="yes" /> Yes</label>
+          <label><input type="radio" name="attending" value="no" /> No</label>
+        </div>
+      </div>
+      <div>
+        <label for="dietaryNotes">Dietary notes</label>
+        <input id="dietaryNotes" name="dietaryNotes" type="text" />
+      </div>
+      <div>
+        <label for="message">Message for the couple</label>
+        <textarea id="message" name="message"></textarea>
+      </div>
+
+      <button class="button" type="submit">Update RSVP</button>
+      <div id="edit-status" role="status" aria-live="polite"></div>
+    </form>
+  </section>
+
+  <script is:inline>
+    const form = document.querySelector("#edit-form");
+    const statusEl = document.querySelector("#edit-status");
+
+    function setStatus(message, type = "notice") {
+      statusEl.className = type === "success" ? "success" : "notice";
+      statusEl.textContent = message;
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("token");
+
+    if (!token) {
+      setStatus("Missing RSVP token. Please use the private link from your email.", "error");
+      form.setAttribute("hidden", "true");
+    } else {
+      fetch(`/.netlify/functions/rsvp-lookup?token=${token}`)
+        .then(async (response) => {
+          const result = await response.json();
+          if (!response.ok) {
+            throw new Error(result.error || "Unable to load RSVP.");
+          }
+          return result;
+        })
+        .then((result) => {
+          form.name.value = result.name || "";
+          form.email.value = result.email || "";
+          if (result.attending) {
+            form.attending.value = "yes";
+          } else {
+            form.attending.value = "no";
+          }
+          form.dietaryNotes.value = result.dietaryNotes || "";
+          form.message.value = result.message || "";
+        })
+        .catch((error) => {
+          setStatus(error.message, "error");
+        });
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const data = new FormData(form);
+      const attendingValue = data.get("attending");
+      if (!attendingValue) {
+        setStatus("Please select yes or no.", "error");
+        return;
+      }
+
+      const attending = attendingValue === "yes";
+
+      const payload = {
+        token,
+        name: String(data.get("name") || "").trim(),
+        email: String(data.get("email") || "").trim(),
+        attending,
+        dietaryNotes: String(data.get("dietaryNotes") || "").trim(),
+        message: String(data.get("message") || "").trim()
+      };
+
+      setStatus("Updating your RSVP...", "notice");
+
+      try {
+        const response = await fetch("/.netlify/functions/rsvp-update", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+        if (!response.ok) {
+          throw new Error(result.error || "Unable to update RSVP.");
+        }
+
+        setStatus("Your RSVP has been updated.", "success");
+      } catch (error) {
+        setStatus(error.message, "error");
+      }
+    });
+  </script>
+</Base>

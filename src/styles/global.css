@@ -1,0 +1,277 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,600;9..144,700&family=Jaldi:wght@400;700&family=Mrs+Saint+Delafield&family=Space+Grotesk:wght@300;400;500;600&display=swap");
+
+:root {
+  color-scheme: light;
+  --cream: #fbe7e1;
+  --clay: #f3c6d3;
+  --forest: #e9456f;
+  --sage: #cc6b85;
+  --terracotta: #d65779;
+  --ink: #5b2a3a;
+  --paper: #fff6f4;
+  --shadow: rgba(233, 69, 111, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Jaldi", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at top left, rgba(233, 69, 111, 0.18), transparent 55%),
+    radial-gradient(circle at bottom right, rgba(243, 198, 211, 0.5), transparent 60%),
+    linear-gradient(180deg, #fff6f4 0%, #fbe7e1 100%);
+  min-height: 100vh;
+}
+
+main {
+  padding: 10px 10px 80px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(12px);
+  background: rgba(251, 231, 225, 0.9);
+  border-bottom: 1px solid rgba(233, 69, 111, 0.18);
+}
+
+.nav {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.nav-title {
+  font-family: "Mrs Saint Delafield", cursive;
+  font-size: 32px;
+  letter-spacing: 0.4px;
+  color: var(--forest);
+  line-height: 1;
+}
+
+.nav-links {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--forest);
+}
+
+.container {
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 32px;
+  align-items: center;
+  padding: 40px;
+  border-radius: 28px;
+  background: var(--paper);
+  box-shadow: 0 20px 60px var(--shadow);
+  border: 1px solid rgba(233, 69, 111, 0.12);
+  animation: fadeUp 0.8s ease-out;
+}
+
+.hero-eyebrow {
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 2.5px;
+  color: var(--sage);
+}
+
+.hero-title {
+  font-family: "Mrs Saint Delafield", cursive;
+  font-size: clamp(32px, 5vw, 54px);
+  margin: 8px 0 12px;
+  color: var(--forest);
+}
+
+.hero-subtitle {
+  font-size: 18px;
+  line-height: 1.6;
+  max-width: 420px;
+}
+
+.card {
+  background: var(--paper);
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 15px 40px var(--shadow);
+  border: 1px solid rgba(233, 69, 111, 0.14);
+}
+
+.section-title {
+  font-family: "Mrs Saint Delafield", cursive;
+  font-size: 38px;
+  margin: 0 0 16px;
+  color: var(--forest);
+}
+
+.section-title--plain {
+  font-family: "Jaldi", sans-serif;
+}
+
+.grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 24px;
+  border-radius: 999px;
+  border: none;
+  background: var(--forest);
+  color: var(--paper);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 12px 24px rgba(233, 69, 111, 0.2);
+}
+
+.button.secondary {
+  background: transparent;
+  color: var(--forest);
+  border: 1px solid rgba(233, 69, 111, 0.45);
+  box-shadow: none;
+}
+
+.button.terracotta {
+  background: var(--terracotta);
+}
+
+.button:hover {
+  transform: translateY(-2px);
+}
+
+form {
+  display: grid;
+  gap: 16px;
+}
+
+label {
+  font-size: 14px;
+  letter-spacing: 0.4px;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(233, 69, 111, 0.25);
+  font-family: inherit;
+  font-size: 15px;
+  background: rgba(255, 246, 244, 0.9);
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid rgba(233, 69, 111, 0.35);
+  border-color: rgba(233, 69, 111, 0.5);
+}
+
+.form-row {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(233, 69, 111, 0.12);
+  color: var(--forest);
+}
+
+.notice {
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: rgba(233, 69, 111, 0.1);
+  border: 1px solid rgba(233, 69, 111, 0.28);
+  color: #a63452;
+}
+
+.success {
+  padding: 16px 20px;
+  border-radius: 16px;
+  background: rgba(233, 69, 111, 0.08);
+  border: 1px solid rgba(233, 69, 111, 0.22);
+  color: var(--forest);
+}
+
+.reveal {
+  animation: fadeUp 0.8s ease-out;
+}
+
+.list {
+  display: grid;
+  gap: 10px;
+}
+
+.file-list {
+  display: grid;
+  gap: 8px;
+  font-size: 14px;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 720px) {
+  .nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero {
+    padding: 28px;
+  }
+}

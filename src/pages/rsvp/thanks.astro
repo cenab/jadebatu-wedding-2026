@@ -1,0 +1,45 @@
+---
+import Base from "../../layouts/Base.astro";
+import { event } from "../../data/event.js";
+---
+<Base title={`Thank You | ${event.coupleNames}`}>
+  <section class="card">
+    <h2 class="section-title section-title--plain">Thank you for your RSVP</h2>
+    <p>We just sent you an email with all the details. You can also review them here.</p>
+
+    <div class="list" style="margin-top: 20px;">
+      <div>
+        <strong>Date:</strong> {event.date}
+      </div>
+      <div>
+        <strong>Time:</strong> {event.startTime} to {event.endTime} ({event.timezone})
+      </div>
+      <div>
+        <strong>Venue:</strong> {event.venue.name}, {event.venue.address}
+      </div>
+      <div>
+        <strong>Dress code:</strong> {event.dressCode}
+      </div>
+    </div>
+
+    <div style="margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap;">
+      <a class="button terracotta" href={event.venue.mapUrl} target="_blank" rel="noreferrer">Map link</a>
+      <a class="button secondary" href="/wedding.ics">Add to calendar</a>
+    </div>
+
+    <div id="edit-wrap" style="margin-top: 20px;" hidden>
+      <a id="edit-link" class="button" href="#">Update your RSVP</a>
+    </div>
+  </section>
+
+  <script is:inline>
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("token");
+    if (token) {
+      const editWrap = document.querySelector("#edit-wrap");
+      const editLink = document.querySelector("#edit-link");
+      editLink.href = `/rsvp/edit?token=${token}`;
+      editWrap.removeAttribute("hidden");
+    }
+  </script>
+</Base>

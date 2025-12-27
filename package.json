@@ -1,0 +1,17 @@
+{
+  "name": "jadebatu-wedding-2026",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "predev": "node --no-warnings scripts/generate-ics.mjs",
+    "build": "astro build",
+    "prebuild": "node --no-warnings scripts/generate-ics.mjs",
+    "generate:ics": "node --no-warnings scripts/generate-ics.mjs",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@sendgrid/mail": "^7.7.0",
+    "@supabase/supabase-js": "^2.45.4",
+    "astro": "^4.15.4"
+  }
+}

@@ -1,0 +1,165 @@
+---
+import Base from "../layouts/Base.astro";
+import { event } from "../data/event.js";
+
+const photoConfig = event.photo;
+---
+<Base title={`Photo Upload | ${event.coupleNames}`}>
+  <section class="card">
+    <h2 class="section-title section-title--plain">Share your photos</h2>
+    <p>
+      Upload up to {photoConfig.maxFiles} photos at once.
+      Max size: {photoConfig.maxFileSizeMb}MB each.
+    </p>
+    <div class="tag">Allowed types: {photoConfig.allowedTypes.join(", ")}</div>
+
+    <form id="upload-form" style="margin-top: 20px;">
+      <div class="form-row">
+        <div>
+          <label for="uploaderName">Your name (optional)</label>
+          <input id="uploaderName" name="uploaderName" type="text" />
+        </div>
+        <div>
+          <label for="uploaderEmail">Your email (optional)</label>
+          <input id="uploaderEmail" name="uploaderEmail" type="email" />
+        </div>
+      </div>
+      <div>
+        <label for="inviteCode">Invite code (if provided)</label>
+        <input id="inviteCode" name="inviteCode" type="text" autocomplete="off" />
+      </div>
+      <div>
+        <label for="files">Select photos</label>
+        <input id="files" name="files" type="file" multiple accept={photoConfig.allowedTypes.join(",")} />
+      </div>
+
+      <div class="file-list" id="file-list"></div>
+
+      <button class="button" type="submit">Upload photos</button>
+      <div id="upload-status" role="status" aria-live="polite"></div>
+    </form>
+  </section>
+
+  <script is:inline define:vars={{ photoConfig }}>
+    const form = document.querySelector("#upload-form");
+    const fileInput = document.querySelector("#files");
+    const fileList = document.querySelector("#file-list");
+    const statusEl = document.querySelector("#upload-status");
+
+    function setStatus(message, type = "notice") {
+      statusEl.className = type === "success" ? "success" : "notice";
+      statusEl.textContent = message;
+    }
+
+    function bytesToMb(bytes) {
+      return Math.round((bytes / 1024 / 1024) * 10) / 10;
+    }
+
+    function renderFiles() {
+      const files = Array.from(fileInput.files || []);
+      fileList.innerHTML = "";
+      files.forEach((file) => {
+        const div = document.createElement("div");
+        div.textContent = `${file.name} (${bytesToMb(file.size)} MB)`;
+        fileList.appendChild(div);
+      });
+    }
+
+    fileInput.addEventListener("change", renderFiles);
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const files = Array.from(fileInput.files || []);
+      if (!files.length) {
+        setStatus("Please select at least one photo.", "error");
+        return;
+      }
+
+      if (files.length > photoConfig.maxFiles) {
+        setStatus(`Please upload no more than ${photoConfig.maxFiles} files at once.`, "error");
+        return;
+      }
+
+      const invalid = files.find((file) => {
+        const tooLarge = file.size > photoConfig.maxFileSizeMb * 1024 * 1024;
+        const wrongType = !photoConfig.allowedTypes.includes(file.type);
+        return tooLarge || wrongType;
+      });
+
+      if (invalid) {
+        setStatus("One or more files exceed the size limit or type restrictions.", "error");
+        return;
+      }
+
+      const data = new FormData(form);
+      const payload = {
+        files: files.map((file) => ({
+          name: file.name,
+          type: file.type,
+          size: file.size
+        })),
+        inviteCode: String(data.get("inviteCode") || "").trim(),
+        uploaderName: String(data.get("uploaderName") || "").trim(),
+        uploaderEmail: String(data.get("uploaderEmail") || "").trim()
+      };
+
+      setStatus("Requesting upload links...", "notice");
+
+      try {
+        const tokenResponse = await fetch("/.netlify/functions/upload-token", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        const tokenResult = await tokenResponse.json();
+        if (!tokenResponse.ok) {
+          throw new Error(tokenResult.error || "Unable to create upload links.");
+        }
+
+        const uploads = tokenResult.uploads || [];
+        if (!uploads.length) {
+          throw new Error("Upload links were not returned.");
+        }
+
+        setStatus("Uploading files...", "notice");
+
+        for (let i = 0; i < uploads.length; i += 1) {
+          const upload = uploads[i];
+          const file = files[i];
+          const putResponse = await fetch(upload.signedUrl, {
+            method: "PUT",
+            headers: { "Content-Type": file.type },
+            body: file
+          });
+
+          if (!putResponse.ok) {
+            throw new Error(`Failed to upload ${file.name}.`);
+          }
+        }
+
+        await fetch("/.netlify/functions/photo-metadata", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            files: uploads.map((upload, index) => ({
+              path: upload.path,
+              originalName: files[index].name,
+              mimeType: files[index].type,
+              sizeBytes: files[index].size
+            })),
+            uploaderName: payload.uploaderName,
+            uploaderEmail: payload.uploaderEmail
+          })
+        });
+
+        setStatus("Upload complete. Thank you for sharing!", "success");
+        form.reset();
+        renderFiles();
+      } catch (error) {
+        setStatus(error.message, "error");
+      }
+    });
+  </script>
+</Base>
