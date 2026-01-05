@@ -18,9 +18,15 @@ import { event } from "../data/event.js";
       </div>
       <div>
         <label>Will you attend?</label>
-        <div class="form-row" style="align-items: center;">
-          <label><input type="radio" name="attending" value="yes" /> Yes</label>
-          <label><input type="radio" name="attending" value="no" /> No</label>
+        <div class="attendance-toggle">
+          <label class="toggle-option">
+            <input type="radio" name="attending" value="yes" />
+            <span class="toggle-label">Yes, I'll be there</span>
+          </label>
+          <label class="toggle-option">
+            <input type="radio" name="attending" value="no" />
+            <span class="toggle-label">Sorry, can't make it</span>
+          </label>
         </div>
       </div>
       <div>

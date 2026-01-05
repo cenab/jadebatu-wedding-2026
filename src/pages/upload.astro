@@ -29,8 +29,17 @@ const photoConfig = event.photo;
         <input id="inviteCode" name="inviteCode" type="text" autocomplete="off" />
       </div>
       <div>
-        <label for="files">Select photos</label>
-        <input id="files" name="files" type="file" multiple accept={photoConfig.allowedTypes.join(",")} />
+        <label>Select photos</label>
+        <label class="file-drop-zone" for="files">
+          <input id="files" name="files" type="file" multiple accept={photoConfig.allowedTypes.join(",")} />
+          <svg class="file-drop-icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          <span class="file-drop-text">Tap to select photos</span>
+          <span class="file-drop-hint">or drag and drop here</span>
+        </label>
       </div>
 
       <div class="file-list" id="file-list"></div>
@@ -66,6 +75,27 @@ const photoConfig = event.photo;
     }
 
     fileInput.addEventListener("change", renderFiles);
+
+    // Drag and drop support
+    const dropZone = document.querySelector(".file-drop-zone");
+
+    dropZone.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      dropZone.classList.add("dragover");
+    });
+
+    dropZone.addEventListener("dragleave", () => {
+      dropZone.classList.remove("dragover");
+    });
+
+    dropZone.addEventListener("drop", (e) => {
+      e.preventDefault();
+      dropZone.classList.remove("dragover");
+      if (e.dataTransfer.files.length) {
+        fileInput.files = e.dataTransfer.files;
+        renderFiles();
+      }
+    });
 
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
