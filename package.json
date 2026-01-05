@@ -1,5 +1,6 @@
 {
   "name": "jadebatu-wedding-2026",
+  "type": "module",
   "private": true,
   "scripts": {
     "dev": "astro dev",
