@@ -2,9 +2,12 @@
 import "../styles/global.css";
 import { event } from "../data/event.js";
 
+const siteUrl = import.meta.env.SITE || "https://jadebatu.com";
+const ogImage = `${siteUrl}/og-image.jpg`;
+
 const {
   title = `${event.coupleNames} Wedding`,
-  description = "Wedding details and RSVP",
+  description = `You're invited to ${event.coupleNames}'s wedding on ${event.date} at ${event.venue.name}`,
   showHeader = true,
   useContainer = true
 } = Astro.props;
@@ -16,6 +19,19 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <title>{title}</title>
+
+    <!-- Open Graph / Facebook / iMessage / WhatsApp -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={siteUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
   </head>
   <body>
     {showHeader && (
