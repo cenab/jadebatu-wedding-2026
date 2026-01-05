@@ -43,7 +43,7 @@ export const event = {
     parking: "Parking is available on-site. Please carpool if you can.",
     kids: "Adults only, thank you for understanding."
   },
-  rsvpDeadline: "Jan 14, 2026",
+  rsvpDeadline: "Jan 8, 2026",
   photo: {
     maxFileSizeMb: 20,
     maxFiles: 10,
