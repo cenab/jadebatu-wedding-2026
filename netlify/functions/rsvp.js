@@ -135,7 +135,6 @@ function buildRsvpEmail({ name, attending, editUrl, siteUrl }) {
     `${event.venue.address}`,
     `Date: ${event.date}`,
     `Time: ${event.startTime} to ${event.endTime} (${event.timezone})`,
-    `Dress code: ${event.dressCode}`
   ].join("\n");
 
   const text = [
@@ -179,10 +178,6 @@ function buildRsvpEmail({ name, attending, editUrl, siteUrl }) {
             <tr>
               <td style="padding: 4px 16px 4px 0; font-size: 14px; color: rgb(233, 115, 69); font-weight: 600;">Time</td>
               <td style="padding: 4px 0; font-size: 14px; color: #5a4a42;">${event.startTime} - ${event.endTime}</td>
-            </tr>
-            <tr>
-              <td style="padding: 4px 16px 4px 0; font-size: 14px; color: rgb(233, 115, 69); font-weight: 600;">Dress code</td>
-              <td style="padding: 4px 0; font-size: 14px; color: #5a4a42;">${event.dressCode}</td>
             </tr>
           </table>
           <p style="margin: 16px 0 0;">
