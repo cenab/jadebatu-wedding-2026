@@ -115,7 +115,7 @@ import { event } from "../data/event.js";
 
         form.setAttribute("hidden", "true");
         successEl.removeAttribute("hidden");
-        statusEl.textContent = "";
+        statusEl.setAttribute("hidden", "true");
 
         if (result.editUrl) {
           editLinkEl.innerHTML = `<a class="button secondary" href="${result.editUrl}">Update your RSVP</a>`;
