@@ -3,13 +3,13 @@
 :root {
   color-scheme: light;
   --cream: #fbe7e1;
-  --clay: #f3c6d3;
-  --forest: #e9456f;
-  --sage: #cc6b85;
-  --terracotta: #d65779;
-  --ink: #5b2a3a;
-  --paper: #fff6f4;
-  --shadow: rgba(233, 69, 111, 0.18);
+  --clay: #f5d9d0;
+  --forest: #c9a088;
+  --sage: #bfa397;
+  --terracotta: #d4a893;
+  --ink: #5a4a42;
+  --paper: #fff9f6;
+  --shadow: rgba(200, 160, 140, 0.18);
 }
 
 * {
@@ -21,9 +21,9 @@ body {
   font-family: "Jaldi", sans-serif;
   color: var(--ink);
   background:
-    radial-gradient(circle at top left, rgba(233, 69, 111, 0.18), transparent 55%),
-    radial-gradient(circle at bottom right, rgba(243, 198, 211, 0.5), transparent 60%),
-    linear-gradient(180deg, #fff6f4 0%, #fbe7e1 100%);
+    radial-gradient(circle at top left, rgba(251, 231, 225, 0.6), transparent 55%),
+    radial-gradient(circle at bottom right, rgba(245, 217, 208, 0.5), transparent 60%),
+    linear-gradient(180deg, #fff9f6 0%, #fbe7e1 100%);
   min-height: 100vh;
 }
 
@@ -47,7 +47,7 @@ header {
   z-index: 10;
   backdrop-filter: blur(12px);
   background: rgba(251, 231, 225, 0.9);
-  border-bottom: 1px solid rgba(233, 69, 111, 0.18);
+  border-bottom: 1px solid rgba(200, 160, 140, 0.2);
 }
 
 .nav {
@@ -64,7 +64,7 @@ header {
   font-family: "Mrs Saint Delafield", cursive;
   font-size: 32px;
   letter-spacing: 0.4px;
-  color: var(--forest);
+  color: #d49393;
   line-height: 1;
 }
 
@@ -75,7 +75,7 @@ header {
   font-size: 15px;
   text-transform: uppercase;
   letter-spacing: 1.2px;
-  color: var(--forest);
+  color: #d49393;
 }
 
 .container {
@@ -92,7 +92,7 @@ header {
   border-radius: 28px;
   background: var(--paper);
   box-shadow: 0 20px 60px var(--shadow);
-  border: 1px solid rgba(233, 69, 111, 0.12);
+  border: 1px solid rgba(200, 160, 140, 0.15);
   animation: fadeUp 0.8s ease-out;
 }
 
@@ -107,7 +107,7 @@ header {
   font-family: "Mrs Saint Delafield", cursive;
   font-size: clamp(32px, 5vw, 54px);
   margin: 8px 0 12px;
-  color: var(--forest);
+  color: #d49393;
 }
 
 .hero-subtitle {
@@ -121,14 +121,14 @@ header {
   border-radius: 20px;
   padding: 28px;
   box-shadow: 0 15px 40px var(--shadow);
-  border: 1px solid rgba(233, 69, 111, 0.14);
+  border: 1px solid rgba(200, 160, 140, 0.15);
 }
 
 .section-title {
   font-family: "Mrs Saint Delafield", cursive;
   font-size: 38px;
   margin: 0 0 16px;
-  color: var(--forest);
+  color: #d49393;
 }
 
 .section-title--plain {
@@ -148,19 +148,19 @@ header {
   padding: 14px 24px;
   border-radius: 999px;
   border: none;
-  background: var(--forest);
+  background: #d49393;
   color: var(--paper);
   font-weight: 600;
   letter-spacing: 0.5px;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 12px 24px rgba(233, 69, 111, 0.2);
+  box-shadow: 0 12px 24px rgba(212, 147, 147, 0.3);
 }
 
 .button.secondary {
   background: transparent;
-  color: var(--forest);
-  border: 1px solid rgba(233, 69, 111, 0.45);
+  color: #d49393;
+  border: 1px solid rgba(212, 147, 147, 0.5);
   box-shadow: none;
 }
 
@@ -188,10 +188,10 @@ select {
   width: 100%;
   padding: 12px 14px;
   border-radius: 12px;
-  border: 1px solid rgba(233, 69, 111, 0.25);
+  border: 1px solid rgba(200, 160, 140, 0.3);
   font-family: inherit;
   font-size: 15px;
-  background: rgba(255, 246, 244, 0.9);
+  background: rgba(255, 249, 246, 0.9);
 }
 
 textarea {
@@ -202,8 +202,8 @@ textarea {
 input:focus,
 textarea:focus,
 select:focus {
-  outline: 2px solid rgba(233, 69, 111, 0.35);
-  border-color: rgba(233, 69, 111, 0.5);
+  outline: 2px solid rgba(200, 160, 140, 0.4);
+  border-color: rgba(200, 160, 140, 0.6);
 }
 
 .form-row {
@@ -219,24 +219,24 @@ select:focus {
   font-size: 13px;
   padding: 6px 12px;
   border-radius: 999px;
-  background: rgba(233, 69, 111, 0.12);
-  color: var(--forest);
+  background: rgba(251, 231, 225, 0.7);
+  color: #b8906e;
 }
 
 .notice {
   padding: 12px 16px;
   border-radius: 14px;
-  background: rgba(233, 69, 111, 0.1);
-  border: 1px solid rgba(233, 69, 111, 0.28);
-  color: #a63452;
+  background: rgba(251, 231, 225, 0.6);
+  border: 1px solid rgba(200, 160, 140, 0.3);
+  color: #9a7a5c;
 }
 
 .success {
   padding: 16px 20px;
   border-radius: 16px;
-  background: rgba(233, 69, 111, 0.08);
-  border: 1px solid rgba(233, 69, 111, 0.22);
-  color: var(--forest);
+  background: rgba(251, 231, 225, 0.5);
+  border: 1px solid rgba(200, 160, 140, 0.25);
+  color: #b8906e;
 }
 
 .reveal {

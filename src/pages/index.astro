@@ -6,10 +6,9 @@ const [partnerOneRaw, partnerTwoRaw] = event.coupleNames.split(/\s+(?:and|&)\s+/
 const partnerOne = partnerOneRaw?.trim() || event.coupleNames;
 const partnerTwo = partnerTwoRaw?.trim() || "";
 
-const inviteLine1 = "Please join us at";
-const inviteLine2 = event.venue.name;
-const inviteLine3 = event.date;
-const inviteLine4 = event.startTime;
+const venueName = event.venue.name;
+const eventDate = event.date;
+const eventTime = event.startTime;
 ---
 <Base title={`${event.coupleNames} Wedding`} showHeader={false} useContainer={false}>
   <section class="invitation-page" aria-label="Wedding invitation">
@@ -30,8 +29,8 @@ const inviteLine4 = event.startTime;
               </div>
 
               <div class="invite-text invite-text--top">
-                <p>We joyfully invite</p>
-                <p>you to join us in our wedding</p>
+                <p>We joyfully invite you</p>
+                <p>to celebrate our wedding</p>
               </div>
 
               <div class="names">
@@ -47,10 +46,8 @@ const inviteLine4 = event.startTime;
               </div>
 
               <div class="invite-text invite-text--bottom">
-                <p>{inviteLine1} {inviteLine2}</p>
-                <p>at {inviteLine3} </p>
-                <p>on {inviteLine4}.</p>
-                <!-- <p>Your presence is cherished.</p> -->
+                <p>{eventDate} at {eventTime}</p>
+                <p>{venueName}</p>
               </div>
             </div>
           </div>
@@ -67,7 +64,7 @@ const inviteLine4 = event.startTime;
     }
 
     :global(body) {
-      background: rgba(233, 69, 111, 0.24);
+      background: rgb(233 127 69 / 24%);
     }
 
     .invitation-stage {
@@ -92,7 +89,7 @@ const inviteLine4 = event.startTime;
       border-radius: 999px;
       border: 1px solid rgba(233, 69, 111, 0.45);
       background: rgba(251, 231, 225, 0.9);
-      color: #e9456f;
+      color: #e95145a8;
       font-weight: 600;
       letter-spacing: 0.5px;
       box-shadow: 0 12px 24px rgba(233, 69, 111, 0.18);
@@ -196,7 +193,7 @@ const inviteLine4 = event.startTime;
       font-family: "Jaldi", sans-serif;
       font-size: 24px;
       line-height: 40px;
-      color: rgba(233, 69, 111, 0.69);
+      color: rgb(233 115 69 / 76%);
       width: 460px;
     }
 
@@ -221,7 +218,7 @@ const inviteLine4 = event.startTime;
       font-family: "Mrs Saint Delafield", cursive;
       font-size: 55px;
       line-height: 50px;
-      color: #e9456f;
+      color: #e95145a8;
       text-shadow: 0 4px 4px rgba(233, 69, 111, 0.24);
       white-space: nowrap;
     }
